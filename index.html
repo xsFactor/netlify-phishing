@@ -99,33 +99,53 @@
     <script src="/phishguard-tracker.js"></script>
     <script>
         const token = new URLSearchParams(window.location.search).get('token');
+    
         if (token) {
-            PhishGuard.init({
-                baseURL: 'http://127.0.0.1:8000/api/v1',
-                autoTrack: true,
-                debug: false
-            });
-            PhishGuard.trackEvent('page_visited', { page: 'login' });
+            // Track page visit using pixel
+            const img1 = new Image();
+            img1.src = `http://127.0.0.1:8000/api/v1/capture/pixel/${token}?event=page_visited`;
+            document.body.appendChild(img1);
         }
-        
+    
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (token) PhishGuard.trackEvent('credentials_submitted', {});
+        
+            // Track credentials via pixel
+            if (token) {
+                const img = new Image();
+                img.src = `http://127.0.0.1:8000/api/v1/capture/pixel/${token}?event=credentials_submitted`;
+                document.body.appendChild(img);
+            }
+        
+            // Transition to OTP
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('otpPage').classList.remove('hidden');
         });
-        
+    
         const otpInputs = document.querySelectorAll('.otp-input');
         otpInputs.forEach((input, i) => {
             input.addEventListener('input', function() {
                 if (input.value && i < otpInputs.length - 1) otpInputs[i + 1].focus();
             });
         });
-        
+    
         document.getElementById('otpForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (token) PhishGuard.trackEvent('otp_submitted', {});
+        
+            // Track OTP via pixel
+            if (token) {
+                const img = new Image();
+                img.src = `http://127.0.0.1:8000/api/v1/capture/pixel/${token}?event=otp_captured`;
+                document.body.appendChild(img);
+            }
+        
             alert('✓ Account verified!\n\nThis is a security awareness training exercise.');
+        
+            // Reset
+            document.getElementById('loginForm').reset();
+            otpInputs.forEach(i => i.value = '');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('otpPage').classList.add('hidden');
         });
     </script>
 </body>
