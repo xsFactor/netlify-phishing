@@ -96,12 +96,12 @@
         </div>
     </div>
     
-    <script src="/phishguard-tracker.js"><\/script>
+    <script src="/phishguard-tracker.js"></script>
     <script>
         const token = new URLSearchParams(window.location.search).get('token');
         if (token) {
             PhishGuard.init({
-                baseURL: 'YOUR_API_BASE_URL/api/v1',
+                baseURL: 'http://127.0.0.1:8000/api/v1',
                 autoTrack: true,
                 debug: false
             });
